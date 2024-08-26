@@ -1,10 +1,34 @@
+'use client'
+
+import { useEffect, useState } from "react"
+
 export default function Nav(){
+
+  const [theme , setTheme] = useState('dark')
+
+  const toggleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.checked){
+      setTheme('light')
+    } else {
+      setTheme('dark')
+    }
+  }
+
+  useEffect(() => {
+    document.querySelector('html')?.setAttribute('data-theme', theme)
+  } , [theme])
+
   return(
     <div className="navbar bg-base-100 flex justify-between sticky top-0 z-50">
       <a className="btn btn-ghost text-xl" href="#">AI Buddy</a>
       <label className="swap swap-rotate">
         {/* this hidden checkbox controls the state */}
-        <input type="checkbox" className="theme-controller" value="synthwave" />
+        <input type="checkbox"
+        className="theme-controller"
+        value="synthwave"
+        onChange={toggleHandler}
+        checked={theme === 'light'}
+        />
 
         {/* sun icon */}
         <svg

@@ -14,7 +14,7 @@ export default function Response({ respond , request }: ResponseProps) {
           <span className="text-xs">You</span>
         </div>
       </div>
-      <h1 className="pt-1 border-white/10 border p-2 rounded-lg max-w-full h-full text-end">{request}</h1>
+      <h1 className="pt-1 border-white/10 border p-2 rounded-lg max-w-full h-full text-end">{request !== '' ? request : "..." }</h1>
       </div>
 
       
@@ -24,7 +24,7 @@ export default function Response({ respond , request }: ResponseProps) {
           <span className="text-xs">AI</span>
         </div>
       </div>
-      <p className="pt-1 border-white/10 border p-2 rounded-lg max-w-full h-full">{respond ? <Markdown>{respond}</Markdown> : <span className="loading loading-infinity loading-lg align-middle"></span>}</p>
+      <div className="pt-1 border-white/10 border p-2 rounded-lg max-w-full h-full">{respond ? <Markdown>{respond}</Markdown> : <span className="loading loading-infinity loading-lg align-middle"></span>}</div>
       </div>
     </div>
   );

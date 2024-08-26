@@ -3,25 +3,32 @@ import { FormEvent , useState } from "react"
 import { motion } from "framer-motion"
 import { IoMdSend } from "react-icons/io";
 import Response from './response'
+
+
 export default function FormAi(){
   const [msg , setMsg] = useState('')
+  const [urMsg , setUrMsg] = useState('')
   const [aiRes , setAiRes] = useState('')
 
   async function onSubmit(event: FormEvent<HTMLFormElement>){
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const msg:string = formData.get("msg")?.toString() || '';
-    setMsg(msg)
+    const formMsg:string = formData.get("msg")?.toString() || '';
+    setUrMsg('')
     setAiRes("")
+    setMsg(formMsg)
+
     const response = await fetch('/api', {
       method: 'POST',
-      body: JSON.stringify({person : msg}),
+      body: JSON.stringify({person : formMsg}),
     })
-    // Handle response if necessary
+
+    // In case something bad happened
     try{
     const data = await response.json()
     setAiRes(data.ai)
+    location.href = "#answer"
     } catch {
       setAiRes("Error! try send the message again")
     }
@@ -36,16 +43,16 @@ export default function FormAi(){
     >
     <form onSubmit={onSubmit} className="flex-col gap-y-16">
       <div>
-        <textarea className="textarea textarea-bordered w-full text-md sm:text-lg" name="msg" placeholder="Ask AI anything" maxLength={290} ></textarea>
+        <textarea onChange={e => {setUrMsg(e.target.value)}} className="textarea textarea-bordered w-full text-md sm:text-lg" name="msg" placeholder="Ask AI anything" maxLength={290} value={urMsg}></textarea>
       </div>
 
-        <div>
-        <button type="submit" onClick={()  => {location.href = "#answer"}} className="btn btn-primary mt-6 text-md sm:text-lg">Send to AI <IoMdSend /></button>
+        <div className="flex justify-end pb-3">
+        <button type="submit" className="btn btn-primary mt-6 text-md sm:text-lg text-end">Send <IoMdSend /></button>
         </div>
       </form>
     </motion.div>
       {
-      msg ?
+      msg || aiRes ?
       <motion.div
       initial={{opacity: 0 , y: 35}}
       animate={{opacity: 1 , y: 0}}

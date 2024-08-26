@@ -4,6 +4,10 @@ export async function POST(
   req: Request,
 ) {
   const body = await req.json()
-  const aiRes = await model.generateContent(body.person);
-  return new Response(JSON.stringify({ai: aiRes.response.text()}))
+  if(body.person){
+    const aiRes = await model.generateContent(body.person);
+    return new Response(JSON.stringify({ai: aiRes.response.text()}))
+    } else {
+      return new Response(JSON.stringify({ai: "I cant tell you anything without saying anything"}))
+  }
 }
