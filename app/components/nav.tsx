@@ -3,8 +3,13 @@
 import { useEffect, useState } from "react"
 
 export default function Nav(){
-  const local = localStorage.getItem('theme')
-  const [theme , setTheme] = useState(local ?? 'light')
+  const [theme , setTheme] = useState<string>()
+
+  useEffect(()=> {
+    const local = localStorage.getItem('theme') ?? 'light'
+    setTheme(local)
+  } , [])
+
 
   const toggleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(e.target.checked){
@@ -15,8 +20,10 @@ export default function Nav(){
   }
 
   useEffect(() => {
-    localStorage.setItem('theme', theme)
-    document.querySelector('html')?.setAttribute('data-theme', theme)
+    if(theme){
+      localStorage.setItem('theme', theme)
+      document.querySelector('html')?.setAttribute('data-theme', theme)
+      }
   } , [theme])
 
   return(
