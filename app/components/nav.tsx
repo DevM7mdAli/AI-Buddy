@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react"
 
 export default function Nav(){
-
-  const [theme , setTheme] = useState('dark')
+  const local = localStorage.getItem('theme')
+  const [theme , setTheme] = useState(local ?? 'light')
 
   const toggleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(e.target.checked){
@@ -15,6 +15,7 @@ export default function Nav(){
   }
 
   useEffect(() => {
+    localStorage.setItem('theme', theme)
     document.querySelector('html')?.setAttribute('data-theme', theme)
   } , [theme])
 
