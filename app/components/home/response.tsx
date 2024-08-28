@@ -3,11 +3,12 @@ import Markdown from "react-markdown";
 type ResponseProps = {
   respond: string;
   request: string;
+  index: number;
 };
 
-export default function Response({ respond , request }: ResponseProps) {
+export default function Response({ respond , request , index }: ResponseProps) {
   return (
-    <div className="flex flex-col gap-y-12 text-md sm:text-lg" id="answer">
+    <div className="flex flex-col gap-y-12 text-md sm:text-lg" id={`answer${index}`}>
       <div className="flex flex-row-reverse gap-x-2 items-start">
       <div className="avatar placeholder">
         <div className="bg-neutral text-neutral-content w-10 rounded-full">
