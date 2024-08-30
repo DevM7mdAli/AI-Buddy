@@ -52,7 +52,7 @@ export default function FormAi(){
           ]
         )
       }
-    location.href = `#answer${chat.length}`
+    // location.href = `#answer${chat.length}`
     } catch {
       if(chat.length === 0){
         setChat([{aiRes: "error in sending", msg: formMsg}])
@@ -64,6 +64,13 @@ export default function FormAi(){
             ]
           )
         }
+    }
+  }
+
+  function onEnter(e: React.KeyboardEvent<HTMLTextAreaElement>){
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault()
+      document.getElementById('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   }
 
@@ -89,17 +96,24 @@ export default function FormAi(){
       : <></>
       }
 
-    <motion.div className="py-3"
+    <motion.div className="sticky bottom-0 bg-base-100 h-full z-50"
         initial={{opacity: 0 , y: -35}}
         animate={{opacity: 1 , y: 0}}
         >
-        <form onSubmit={onSubmit} className="flex-col gap-y-16">
-          <div>
-            <textarea onChange={e => {setUrMsg(e.target.value)}} className="textarea textarea-bordered w-full text-md sm:text-lg" name="msg" placeholder="Ask AI anything" maxLength={290} value={urMsg}></textarea>
+        <form onSubmit={onSubmit} className="flex gap-x-2 py-3 justify-center items-start" id="form">
+          <div className="flex-grow">
+            <textarea onChange={e => {setUrMsg(e.target.value)}}
+            className="textarea textarea-bordered w-full text-md sm:text-lg"
+            name="msg"
+            placeholder="Ask AI anything"
+            rows={1}
+            maxLength={500}
+            onKeyDown={onEnter}
+            value={urMsg}></textarea>
           </div>
 
-            <div className="flex justify-end pb-3">
-            <button type="submit" className="btn btn-primary mt-6 text-md sm:text-lg text-end">Send <IoMdSend /></button>
+            <div>
+            <button type="submit" className="btn btn-primary text-md sm:text-lg text-end" disabled={urMsg ? false : true} >Send <IoMdSend /></button>
             </div>
           </form>
         </motion.div>
