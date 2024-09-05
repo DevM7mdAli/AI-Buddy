@@ -11,6 +11,8 @@
   "dependencies": {
     "@google/generative-ai": "^0.17.0",
     "@next/env": "^14.2.5",
+    "@vercel/analytics": "^1.3.1",
+    "@vercel/speed-insights": "^1.0.12",
     "ai-buddy": "file:",
     "framer-motion": "^11.3.28",
     "next": "14.2.5",
