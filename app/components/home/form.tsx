@@ -103,7 +103,7 @@ export default function FormAi(){
         <form onSubmit={onSubmit} className="flex gap-x-2 py-3 justify-center items-start" id="form">
           <div className="flex-grow">
             <textarea onChange={e => {setUrMsg(e.target.value)}}
-            className="textarea textarea-bordered w-full text-md sm:text-lg"
+            className="textarea textarea-bordered w-full text-lg"
             name="msg"
             placeholder="Ask AI anything"
             rows={1}
